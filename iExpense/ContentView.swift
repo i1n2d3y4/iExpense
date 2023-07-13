@@ -43,25 +43,8 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             List {
-                // removing this to replace with sections for business and personal below
-//                ForEach(expenses.items, id: \.id) { item in
-//                    HStack {
-//                        VStack(alignment: .leading) {
-//                            Text(item.name)
-//                                .font(.headline)
-//                            Text(item.type)
-//                                .foregroundColor(.gray)
-//                        }
-//                        Spacer()
-//                        Text(item.currency)
-//                            .foregroundColor(.gray)
-//                        Text(item.amount, format: .currency(code: item.currency))
-//                            .setStyleOfAmount(item.amount)
-//                    }
-//
-                    ExpenseSection(title: "Business", expenses: expenses.businessExpenses)
-                }
-// removing as onDelete will be called from section                .onDelete(perform: removeItems)
+                ExpenseSection(title: "Business - \(expenses.businessExpensesTotal)", expenses: expenses.businessExpenses, deleteItems: deleteBusinessItems)
+                ExpenseSection(title: "Personal - \(expenses.personalExpensesTotal)", expenses: expenses.personalExpenses, deleteItems: deletePersonalItems)
             }
             .navigationTitle("iExpense")
             .sheet(isPresented: $showingAddExpense) {
@@ -77,10 +60,19 @@ struct ContentView: View {
         }
     }
     
-    func removeItems(at offsets: IndexSet) {
-        expenses.items.remove(atOffsets: offsets)
+//    func deleteItems(_ offset: IndexSet) {
+//        expenses.items.remove(atOffsets: offset)
+//    }
+    func deleteBusinessItems(_ offset: IndexSet) {
+        expenses.items.remove(atOffsets: offset)
+    }
+    
+    func deletePersonalItems(_ offset: IndexSet) {
+        expenses.items.remove(atOffsets: offset)
     }
 }
+    
+
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {

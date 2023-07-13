@@ -11,10 +11,10 @@ import SwiftUI
 struct ExpenseSection: View {
     let title: String // header title for the section
     let expenses: [ExpenseItem] // the array of expense items
-//    let deleteItems: (IndexSet) -> Void
+    let deleteItems: (IndexSet) -> Void
     
     var body: some View {
-        Section(title) {
+        Section {
             ForEach(expenses) { item in
                 HStack {
                     VStack(alignment: .leading) {
@@ -28,7 +28,9 @@ struct ExpenseSection: View {
                         .setStyleOfAmount(item.amount)
                 }
             }
-//            .onDelete(perform: deleteItems)
+            .onDelete(perform: deleteItems)
+        } header: {
+            Text(title)
         }
     }
     
